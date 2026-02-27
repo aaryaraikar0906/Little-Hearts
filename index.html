@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For You 💌</title>
+
+<style>
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: linear-gradient(to right, #ffd6e8, #ffeef5);
+text-align: center;
+overflow-x: hidden;
+}
+
+/* PASSWORD SCREEN */
+#passwordScreen {
+margin-top: 120px;
+}
+
+input {
+padding: 10px;
+border-radius: 20px;
+border: 1px solid #ff4d88;
+outline: none;
+}
+
+button {
+padding: 8px 18px;
+border-radius: 20px;
+border: none;
+background: #ff4d88;
+color: white;
+cursor: pointer;
+margin-left: 5px;
+}
+
+/* MAIN CONTENT */
+#mainContent {
+display: none;
+padding: 30px;
+}
+
+.envelope {
+font-size: 28px;
+cursor: pointer;
+margin: 8px;
+display: inline-block;
+transition: transform 0.2s;
+}
+
+.envelope:hover {
+transform: scale(1.3);
+}
+
+.letter {
+display: none;
+background: white;
+padding: 15px;
+margin: 10px auto;
+width: 260px;
+border-radius: 15px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+from {opacity: 0;}
+to {opacity: 1;}
+}
+
+/* Floating hearts */
+.heart {
+position: fixed;
+bottom: -10px;
+font-size: 18px;
+color: #ff4d88;
+animation: float 6s linear infinite;
+}
+
+@keyframes float {
+0% {transform: translateY(0); opacity: 1;}
+100% {transform: translateY(-800px); opacity: 0;}
+}
+
+#finalMessage {
+display: none;
+margin-top: 30px;
+font-size: 18px;
+color: #ff4d88;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="passwordScreen">
+<h2>Enter the secret password 💖</h2>
+<input type="password" id="passwordInput" placeholder="Password">
+<button onclick="checkPassword()">Open</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+<h2>Open the tiny letters 💌</h2>
+<div id="envelopes"></div>
+
+<div id="finalMessage">
+✨ Just the way you are… was always enough. 💕
+</div>
+</div>
+
+<!-- YouTube Background Music -->
+<iframe
+width="0"
+height="0"
+src="https://www.youtube.com/embed/LjhCEhWiKXk?autoplay=1&loop=1&playlist=LjhCEhWiKXk"
+frameborder="0"
+allow="autoplay">
+</iframe>
+
+<script>
+const password = "alwaysenough"; // CHANGE THIS PASSWORD
+let openedCount = 0;
+const messages = [
+"You never needed to try so hard. You were always enough.",
+"Your smile still lives rent free in my head.",
+"You made ordinary days feel special.",
+"I hope someone reminds you how rare you are.",
+"You were my favorite notification.",
+"Some songs will always sound like you.",
+"You had the softest heart.",
+"Just the way you are… was perfect to me."
+];
+
+const totalLetters = messages.length;
+const container = document.getElementById("envelopes");
+
+messages.forEach((msg, index) => {
+let env = document.createElement("div");
+env.className = "envelope";
+env.innerHTML = "💌";
+env.onclick = function() {
+openLetter(index);
+};
+
+let letter = document.createElement("div");
+letter.className = "letter";
+letter.id = "letter" + index;
+letter.innerHTML = msg;
+
+container.appendChild(env);
+container.appendChild(letter);
+});
+
+function openLetter(num) {
+let letter = document.getElementById("letter" + num);
+if (letter.style.display !== "block") {
+letter.style.display = "block";
+openedCount++;
+}
+if (openedCount === totalLetters) {
+document.getElementById("finalMessage").style.display = "block";
+}
+}
+
+function checkPassword() {
+if (document.getElementById("passwordInput").value === password) {
+document.getElementById("passwordScreen").style.display = "none";
+document.getElementById("mainContent").style.display = "block";
+} else {
+alert("Wrong password 💔");
+}
+}
+
+/* Floating hearts animation */
+setInterval(() => {
+let heart = document.createElement("div");
+heart.className = "heart";
+heart.innerHTML = "💖";
+heart.style.left = Math.random() * 100 + "vw";
+document.body.appendChild(heart);
+
+setTimeout(() => {
+heart.remove();
+}, 6000);
+}, 500);
+</script>
+
+</body>
+</html>
