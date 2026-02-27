@@ -42,27 +42,38 @@
             padding: 30px;
         }
 
+        /* GRID LAYOUT */
+        #envelopes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .card {
+            text-align: center;
+        }
+
         .envelope {
-            font-size: 28px;
+            font-size: 40px;
             cursor: pointer;
-            margin: 8px;
-            display: inline-block;
             transition: transform 0.2s;
         }
 
         .envelope:hover {
-            transform: scale(1.3);
+            transform: scale(1.2);
         }
 
         .letter {
             display: none;
             background: white;
             padding: 15px;
-            margin: 10px auto;
-            width: 260px;
+            margin-top: 10px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.6s ease-in-out;
+            font-size: 14px;
         }
 
         @keyframes fadeIn {
@@ -102,6 +113,19 @@
             font-size: 18px;
             color: #ff4d88;
         }
+
+        /* VIDEO SECTION */
+        #videoContainer {
+            display: none;
+            margin-top: 50px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 700px) {
+            #envelopes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 
@@ -122,16 +146,21 @@
         <div id="finalMessage">
             ✨ Just the way you are… was always enough. 💕
         </div>
+
+        <!-- YouTube Video at Bottom -->
+        <div id="videoContainer">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/sW7JmJmcUWg"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
     </div>
 
-    <!-- YouTube Background Music -->
-    <iframe width="0" height="0" src="https://www.youtube.com/watch?v=sW7JmJmcUWg&list=RDsW7JmJmcUWg&start_radio=1"
-        frameborder="0" allow="autoplay">
-    </iframe>
-
     <script>
-        const password = "alwaysenough"; // CHANGE THIS PASSWORD
+        const password = "alwaysenough";
         let openedCount = 0;
+
         const messages = [
             "Ajinkya, I have been trying to express and miserably failing at doing so. But this is not one of those messages where I will force my intentions on you. There are so many things locked up in my heart and so many dreams I never could complete. This is an apology note. Apology to us.I did all of the analysis(Don't worry it's not a job). I apologised for all the mistakes that I made. This was one of the checklist items in my life where I wanted to build a website for you. Sadly I did not get chance . But don't worry , I will say good bye with it. <3 (Old school syle)",
             "Welcome to my heart! You are reading this so ofcourse you have figured out the password. Hey Ajinkya! I hope you're doing fine. I hope you are doing justice to my old Ajinkya. Don't lie. Not to yourself. I think of you when I achieve something. I don't miss you. I breathe trying to implement everything I have learned so far. Trying to become a person I alwaays wanted to be. I hope you have all the things that you wanted to try and grow into. :)",
@@ -147,6 +176,10 @@
         const container = document.getElementById("envelopes");
 
         messages.forEach((msg, index) => {
+
+            let card = document.createElement("div");
+            card.className = "card";
+
             let env = document.createElement("div");
             env.className = "envelope";
             env.innerHTML = "💌";
@@ -159,16 +192,19 @@
             letter.id = "letter" + index;
             letter.innerHTML = msg;
 
-            container.appendChild(env);
-            container.appendChild(letter);
+            card.appendChild(env);
+            card.appendChild(letter);
+            container.appendChild(card);
         });
 
         function openLetter(num) {
             let letter = document.getElementById("letter" + num);
+
             if (letter.style.display !== "block") {
                 letter.style.display = "block";
                 openedCount++;
             }
+
             if (openedCount === totalLetters) {
                 document.getElementById("finalMessage").style.display = "block";
             }
@@ -178,12 +214,13 @@
             if (document.getElementById("passwordInput").value === password) {
                 document.getElementById("passwordScreen").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
+                document.getElementById("videoContainer").style.display = "block";
             } else {
                 alert("Wrong password 💔");
             }
         }
 
-        /* Floating hearts animation */
+        /* Floating hearts */
         setInterval(() => {
             let heart = document.createElement("div");
             heart.className = "heart";
